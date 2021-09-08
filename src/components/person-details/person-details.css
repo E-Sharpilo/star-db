@@ -1,0 +1,10 @@
+.person-details{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    padding: 10px;
+}
+.person-details img{
+    width: 40%; 
+    border-radius: 0.25rem;
+}
