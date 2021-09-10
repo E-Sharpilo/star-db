@@ -4,7 +4,12 @@
     height: 100%;
     padding: 10px;
 }
-.person-details img{
+.person-details .img-inner{
     width: 40%; 
+    
+}
+
+.person-details img{
+    width: 100%;
     border-radius: 0.25rem;
 }
