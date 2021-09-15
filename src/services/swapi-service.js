@@ -2,7 +2,7 @@ export default class SwapiService {
     _apiBase = 'https://swapi.dev/api'
 
 
-    async getResource(url) {
+    getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
         if (!res.ok) {
             throw new Error(`Could not fetch ${url}, received ${res.status}`)
@@ -10,31 +10,32 @@ export default class SwapiService {
         return await res.json();
     }
 
-    async getAllPeople() {
+    getAllPeople = async () => {
         const res = await this.getResource(`/people/`);
         return res.results.map(this._transformPerson);
     }
-    async getPerson(id) {
+    getPerson = async (id) => {
         const person = await this.getResource(`/people/${id}`);
         return this._transformPerson(person);
     }
-    async getAllPlanets() {
+    getAllPlanets = async () => {
         const res = await this.getResource(`/planets/`);
         return res.results.map(this._transformPlanet);
     }
-    async getPlanet(id) {
+    getPlanet = async (id) => {
         const planet = await this.getResource(`/planets/${id}`);
         return this._transformPlanet(planet);
     }
-    async getAllStarships() {
+    getAllStarships = async () => {
         const res = await this.getResource(`/starships/`);
         return res.results;
     }
-    getStarship(id) {
-        return this.getResource(`/starships/${id}`);
+    getStarship = async (id) => {
+        const starship = await this.getResource(`/starships/${id}`)
+        return this._transformPlanet(starship);
     }
 
-    _extractId(item) {
+    _extractId = (item) => {
         const regular = /\/([0-9]*)\/$/;
         return item.url.match(regular)[1];
     }
@@ -42,7 +43,7 @@ export default class SwapiService {
     _transformPlanet = (planet) => {
         return {
             id: this._extractId(planet),
-            planetName: planet.name,
+            name: planet.name,
             population: planet.population,
             rotationPeriod: planet.rotation_period,
             diameter: planet.diameter,
@@ -53,7 +54,7 @@ export default class SwapiService {
     _transformPerson = (person) => {
         return {
             id: this._extractId(person),
-            personName: person.name,
+            name: person.name,
             personWeight: person.mass,
             hairColor: person.hair_color,
             gender: person.gender,
@@ -66,7 +67,7 @@ export default class SwapiService {
     _transfomStarship = (starship) => {
         return {
             id: this._extractId(starship),
-            starshipName: starship.name,
+            name: starship.name,
             starshipModel: starship.model,
             starshipClass: starship.starship_class,
             manufacturer: starship.manufacturer,
