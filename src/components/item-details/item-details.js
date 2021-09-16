@@ -1,47 +1,50 @@
 import React, { Component } from "react";
-import SwapiService from "../../services/swapi-service"
-import Spinner from "../spinner/"
+import Spinner from "../spinner"
 
-import "./person-details.css"
+import "./item-details.css"
 
-export default class PersonDetails extends Component {
-    swapi = new SwapiService();
+export default class ItemDetails extends Component {
 
     state = {
-        person: null,
+        item: null,
         loading: true,
+        image: null
     }
 
     componentDidMount() {
-        this.updatePerson();
+        this.updateItem();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
-            this.updatePerson();
+        if (this.props.itemId !== prevProps.itemId) {
+            this.updateItem();
         }
     }
 
-    updatePerson() {
-        const { personId } = this.props;
-        if (!personId) {
+    updateItem() {
+        const { itemId, getData, getImageUrl } = this.props;
+        if (!itemId) {
             return;
         }
-        this.swapi.getPerson(personId)
-            .then((person) => {
-                this.setState({ person, loading: false })
+        getData(itemId)
+            .then((item) => {
+                this.setState({
+                    item,
+                    loading: false,
+                    image: getImageUrl(item)
+                })
             })
     }
-    render() {
-        const { loading, person } = this.state;
 
+    render() {
+        const { loading, item, image } = this.state;
         const spinner = loading ? <Spinner /> : null;
-        const content = !loading ? < DetailsPerson person={person} /> : null;
-        if (!this.state.person) {
-            return <span>Select person</span>
+        const content = !loading ? < DetailsItem item={item} image={image} /> : null;
+        if (!this.state.item) {
+            return <span>Select item</span>
         }
         return (
-            <div className="person-details card" >
+            <div className="item-details card" >
                 {spinner}
                 {content}
             </div>
@@ -50,15 +53,16 @@ export default class PersonDetails extends Component {
 }
 
 
-const DetailsPerson = ({ person }) => {
-    const { id, personName, hairColor, gender, height, eyeColor, birth } = person;
+const DetailsItem = ({ item, image }) => {
+    const { name, hairColor, gender, height, eyeColor, birth } = item;
+
     return (
         <React.Fragment>
             <div className="img-inner">
-                <img alt="/#" src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+                <img alt="/#" src={image} />
             </div>
             <div className="card-body">
-                <h4>{personName}</h4>
+                <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">Gender: <span>{gender}</span></li>
                     <li className="list-group-item">Birth Year: <span>{birth}</span></li>

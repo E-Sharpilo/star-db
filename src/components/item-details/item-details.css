@@ -1,15 +1,15 @@
-.person-details{
+.item-details{
     display: flex;
     flex-direction: row;
     height: 100%;
     padding: 10px;
 }
-.person-details .img-inner{
+.item-details .img-inner{
     width: 40%; 
     
 }
 
-.person-details img{
+.item-details img{
     width: 100%;
     border-radius: 0.25rem;
 }

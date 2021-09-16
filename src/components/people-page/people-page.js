@@ -3,7 +3,7 @@ import ErrorBoundry from "../error-boundry/"
 import Col2Style from "../col-2-style/";
 
 import ItemList from "../item-list/";
-import PersonDetails from "../person-details/";
+import ItemDetails from "../item-details";
 
 import SwapiService from "../../services/swapi-service"
 
@@ -33,7 +33,10 @@ export default class PeoplePage extends Component {
 
             </ItemList>
         );
-        const personDetails = (<PersonDetails personId={this.state.selectedPerson} />);
+        const personDetails = (<ItemDetails
+            itemId={this.state.selectedPerson}
+            getData={this.swapi.getPerson}
+            getImageUrl={this.swapi.getPersonImage} />);
         return (
             <ErrorBoundry>
                 <Col2Style left={itemList} right={personDetails} />

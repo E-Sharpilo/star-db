@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
+import Col2Style from "../col-2-style/"
 
 import ErrorIndicator from "../error-indicator";
 import Header from "../header/";
@@ -8,7 +9,7 @@ import PeoplePage from "../people-page/";
 
 
 // import ItemList from "../item-list/";
-// import PersonDetails from "../person-details/";
+import ItemDetails from "../item-details/";
 // import PlanetDetails from "../planet-details/";
 
 // import StarshipDetails from "../starship-details";
@@ -29,12 +30,31 @@ export default class App extends Component {
         if (this.state.hasError) {
             return <ErrorIndicator />
         }
+
+        const personDetails = (
+            <ItemDetails
+                itemId={3}
+                getData={this.swapi.getPerson}
+                getImageUrl={this.swapi.getPersonImage}
+            />
+        )
+
+        const starshipDetails = (
+            <ItemDetails
+                itemId={5}
+                getData={this.swapi.getStarship}
+                getImageUrl={this.swapi.getStarshipImage}
+            />
+        )
+
         return (
             <div className="app" >
                 <Header />
                 <RandomPlanet />
                 <PeoplePage />
 
+
+                <Col2Style left={personDetails} right={starshipDetails} />
 
             </div>
 
