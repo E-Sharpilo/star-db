@@ -1,14 +1,26 @@
 import React, { Component } from "react";
-import Spinner from "../spinner"
-
+import Spinner from "../spinner/"
 import "./item-details.css"
+
+
+const Record = ({ item, field, label }) => {
+    return (
+        <li className="list-group-item">
+            <span>{label + " "}</span>
+            <span>{item[field]}</span>
+        </li>
+    )
+}
+export {
+    Record
+}
 
 export default class ItemDetails extends Component {
 
     state = {
         item: null,
-        loading: true,
-        image: null
+        image: null,
+        loading: false
     }
 
     componentDidMount() {
@@ -37,9 +49,10 @@ export default class ItemDetails extends Component {
     }
 
     render() {
-        const { loading, item, image } = this.state;
+        const { item, image, loading } = this.state;
+        const children = this.props.children
         const spinner = loading ? <Spinner /> : null;
-        const content = !loading ? < DetailsItem item={item} image={image} /> : null;
+        const content = !loading ? < Details item={item} image={image} children={children} /> : null;
         if (!this.state.item) {
             return <span>Select item</span>
         }
@@ -52,10 +65,8 @@ export default class ItemDetails extends Component {
     }
 }
 
-
-const DetailsItem = ({ item, image }) => {
-    const { name, hairColor, gender, height, eyeColor, birth } = item;
-
+const Details = ({ item, image, children }) => {
+    const { name } = item
     return (
         <React.Fragment>
             <div className="img-inner">
@@ -64,13 +75,14 @@ const DetailsItem = ({ item, image }) => {
             <div className="card-body">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Gender: <span>{gender}</span></li>
-                    <li className="list-group-item">Birth Year: <span>{birth}</span></li>
-                    <li className="list-group-item">Height: <span>{height}</span></li>
-                    <li className="list-group-item">Hair Color: <span>{hairColor}</span></li>
-                    <li className="list-group-item">Eye Color: <span>{eyeColor}</span></li>
+                    {
+                        React.Children.map(children, (child) => {
+                            return React.cloneElement(child, { item });
+                        })
+                    }
                 </ul>
             </div>
         </React.Fragment>
     )
 }
+
