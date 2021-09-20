@@ -32,7 +32,7 @@ export default class SwapiService {
     }
     getStarship = async (id) => {
         const starship = await this.getResource(`/starships/${id}`)
-        return this._transformPlanet(starship);
+        return this._transfomStarship(starship);
     }
 
     getPersonImage = ({ id }) => {
