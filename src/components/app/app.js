@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
+import { SwapiProvider } from "../swapi-context/swapi-context"
 import Col2Style from "../col-2-style/"
 
 import ErrorIndicator from "../error-indicator";
@@ -43,30 +44,31 @@ export default class App extends Component {
 
         console.log(this.swapi.getStarship(5))
         return (
+            <SwapiProvider value={this.swapi}>
+                <div className="app" >
+                    <Header />
+                    <RandomPlanet />
+                    <Col2Style
+                        left={<PersonList />}
+                        right={
+                            <PersonDetails itemId={11}></PersonDetails>
+                        }
+                    />
+                    <Col2Style
+                        left={<PlanetList />}
+                        right={
+                            <PlanetDetails itemId={5}></PlanetDetails>
+                        }
+                    />
+                    <Col2Style
+                        left={<StarshipList />}
+                        right={
+                            <StarshipDetails itemId={9}></StarshipDetails>
+                        }
+                    />
 
-            <div className="app" >
-                <Header />
-                <RandomPlanet />
-                <Col2Style
-                    left={<PersonList />}
-                    right={
-                        <PersonDetails itemId={11}></PersonDetails>
-                    }
-                />
-                <Col2Style
-                    left={<PlanetList />}
-                    right={
-                        <PlanetDetails itemId={5}></PlanetDetails>
-                    }
-                />
-                <Col2Style
-                    left={<StarshipList />}
-                    right={
-                        <StarshipDetails itemId={9}></StarshipDetails>
-                    }
-                />
-            </div>
-
+                </div>
+            </SwapiProvider>
         )
     }
 
