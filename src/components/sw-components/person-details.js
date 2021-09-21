@@ -3,13 +3,9 @@ import React from "react";
 import ItemDetails, { Record } from "../item-details/item-details";
 import { withSwapi } from "../hoc-helper"
 
-const PersonDetails = ({ itemId, swapi }) => {
-    const { getPerson, getPersonImage } = swapi
+const PersonDetails = (props) => {
     return (
-        <ItemDetails
-            itemId={itemId}
-            getData={getPerson}
-            getImageUrl={getPersonImage} >
+        <ItemDetails {...props} >
             <Record field="gender" label="Gender" />
             <Record field="birth" label="Birth Year" />
             <Record field="eyeColor" label="Eye Color" />
@@ -20,4 +16,11 @@ const PersonDetails = ({ itemId, swapi }) => {
     )
 }
 
-export default withSwapi(PersonDetails);
+const mapMethodsToProps = (swapi) => {
+    return {
+        getData: swapi.getPerson,
+        getImageUrl: swapi.getPersonImage
+    }
+};
+
+export default withSwapi(mapMethodsToProps)(PersonDetails);
