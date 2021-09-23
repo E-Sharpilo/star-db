@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import "./col-2-style.css"
 
 const Col2Style = ({ left, right }) => {
@@ -13,6 +13,11 @@ const Col2Style = ({ left, right }) => {
             </div>
         </div>
     )
+}
+
+Col2Style.propTypes = {
+    left: PropTypes.node,
+    right: PropTypes.node
 }
 
 export default Col2Style;
