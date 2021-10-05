@@ -10,9 +10,9 @@ const Header = () => {
                 <Link to="/">Star DB</Link>
             </h3>
             <ul>
-                <li><Link to="/people">People</Link></li>
-                <li><Link to="/planets">Planets</Link></li>
-                <li><Link to="/starships">Sterships</Link></li>
+                <li><Link to="/people/">People</Link></li>
+                <li><Link to="/planets/">Planets</Link></li>
+                <li><Link to="/starships/">Sterships</Link></li>
             </ul>
         </div>
     )

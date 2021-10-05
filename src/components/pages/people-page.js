@@ -1,24 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
+import { withRouter } from "react-router-dom";
 import Col2Style from "../col-2-style"
 import { PersonList, PersonDetails } from "../sw-components/"
 
-export default class PeoplePage extends Component {
-    state = {
-        selectedItem: null
-    }
-
-    onItemSelected = (selectedItem) => {
-        this.setState({
-            selectedItem
-        })
-    }
-
-    render() {
-        const { selectedItem } = this.state
-        return (
-            <Col2Style
-                left={<PersonList onItemSelected={this.onItemSelected} />}
-                right={<PersonDetails itemId={selectedItem}></PersonDetails>} />
-        )
-    }
+const PeoplePage = ({ match, history }) => {
+    const { id } = match.params
+    return (
+        <Col2Style
+            left={<PersonList onItemSelected={(id) => history.push(id)} />}
+            right={<PersonDetails itemId={id}></PersonDetails>} />
+    )
 }
+
+export default withRouter(PeoplePage)
